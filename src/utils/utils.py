@@ -36,34 +36,3 @@ def load_csv_file(filename: str) -> pd.DataFrame:
     pandas.DataFrame: A DataFrame containing the data from the CSV file.
     """
     return pd.read_csv(filename, index_col=None, header=0)
-
-def create_transaction_graph_from_dataframe(df: pd.DataFrame) -> nx.Graph:
-    """
-    Create a transaction graph from a pandas DataFrame.
-
-    Parameters:
-    df (pd.DataFrame): The DataFrame containing transaction data.
-
-    Returns:
-    nx.Graph: The transaction graph.
-
-    """
-    G = nx.Graph()
-
-    for _, row in df.iterrows():
-        source = row["Source"]
-        target = row["Target"]
-        weight = row["value"]
-
-        if G.has_edge(source, target):
-            G[source][target]["weight"] += weight
-        else:
-            G.add_edge(
-                source,
-                target,
-                weight=weight,
-                date=row["date"],
-                nb_transactions=row["nb_transactions"],
-            )
-    
-    return G

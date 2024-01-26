@@ -70,6 +70,15 @@ class Actor:
         self.transactions_volume_by_day = sorted(self.transactions_volume_by_day, key=lambda x: x.get_date())
         return self.transactions_volume_by_day
             
+    def set_community(self, community):
+        """
+        Set the community to which this actor belongs.
+
+        Parameters:
+        community (str): The community to which this actor belongs.
+        """
+        self.community = community
+            
     def get_transactions_volume_by_day(self):
         """
         Get the transactions of this actor grouped by date.
@@ -151,13 +160,12 @@ class Actor:
         """
         return self.name
     
-    
     def print(self):
         """
         Print the actor's name and the community to which it belongs.
         """
         table = [["Name", "Community", "Total Volume", "Sent Volume", "Received Volume", "Total Transactions", "Unique Transactions"],
-                    [self.name, self.community, self.get_total_volume(), self.get_volume_sended(), self.get_volume_received(), self.get_nb_transactions(), self.get_nb_unique_transactions()]]
+                    [self.name, self.community.get_name(), self.get_total_volume(), self.get_volume_sended(), self.get_volume_received(), self.get_nb_transactions(), self.get_nb_unique_transactions()]]
         
         print(tabulate.tabulate(table, headers="firstrow"))
         
