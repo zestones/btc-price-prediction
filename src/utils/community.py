@@ -11,7 +11,7 @@ class Community:
         Initialize a Community object.
 
         Args:
-        actors (list): List of actors in the community.
+        actors (list): List of actors name in the community.
         sended (float): Total amount sent by the community.
         received (float): Total amount received by the community.
         nb_transactions (int): Total number of transactions made by the community.
@@ -21,7 +21,7 @@ class Community:
         Community.last_assigned_id += 1
         self.id = Community.last_assigned_id
         
-        self.members = actors
+        self.members = set(actors)
         self.size = len(actors)
         
         self.sended = sended
@@ -48,12 +48,15 @@ class Community:
         
         actor = Actor("COMMUNITY_TOTAL_VOLUME", "-1")
         for transaction_date, transactions in transactions_by_date.items():
-            volume_day = sum([transaction.get_value() for transaction in transactions])
+            volume_day = 0
+            nb_transactions_day = 0
+            for transaction in transactions:
+                volume_day += transaction.get_value()
+                nb_transactions_day += transaction.get_nb_transactions()
+                
             nb_transactions_day = sum([transaction.get_nb_transactions() for transaction in transactions])
-            
-            transaction = Transaction(self, actor, volume_day, nb_transactions_day, transaction_date)
-            self.transactions_volume_by_day.append(transaction)   
-         
+            self.transactions_volume_by_day.append(Transaction(self, actor, volume_day, nb_transactions_day, transaction_date))   
+
         self.transactions_volume_by_day = sorted(self.transactions_volume_by_day, key=lambda x: x.get_date())
         return self.transactions_volume_by_day
     
