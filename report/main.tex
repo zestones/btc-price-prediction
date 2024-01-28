@@ -1,0 +1,304 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{lmodern}
+\usepackage{moreverb}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{url}
+\def\UrlBreaks{\do\/\do-}  % Permet des sauts de ligne dans les URL au niveau des "/" et des "-"
+
+
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+\pagestyle{headings}
+\pagestyle{plain}
+
+\usepackage{listings} 
+
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+\makeatletter
+
+
+\makeatother
+
+\makeatletter
+\def\toclevel@subsubsubsection{4}
+\def\toclevel@paragraph{5}
+\def\toclevel@subparagraph{6}
+\makeatother
+
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+\newcommand{\hsp}{\hspace{20pt}}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\begin{document}
+
+\begin{titlepage}
+  \begin{sffamily}
+  \begin{center}
+
+   
+    \textsc{\LARGE }\\[2cm]
+
+    \textsc{\Large M2 DSC - Université Jean Monnet}\\[1.5cm]
+
+    % Title
+    \HRule \\[0.4cm]
+    { \huge  \textsc{Bitcoin Analysis} \\
+    \textsc{\Large Data Mining for Big Data}\\ [0.4cm] }
+	
+    \HRule \\[2cm]
+    \textsc { Idriss BENGUEZZOU \\Mohammed BOUTOUIZERA \\Ghilas MEZIANE \\Mahmoud NASHAR}
+ \begin{figure}
+     \centering
+    \includegraphics[scale=0.2]{logoUJM.png}
+     \label{fig:ujm_logo}
+ \end{figure}
+
+    \vfill
+
+    % Bottom of the page
+    {\large {} 27/01/2024}
+
+  \end{center}
+  \end{sffamily}
+\end{titlepage}
+
+
+\newpage
+\tableofcontents
+
+\newpage
+
+\section{Introduction}
+
+Bitcoin has changed how digital transactions work by being decentralized and using blockchain technology. This project looks at the connections between Machine Learning, Data Mining, and Network Analysis to find insights in the Bitcoin network. As a data science team in Information Technology, our goal is to provide a detailed analysis for an organization interested in blockchain and Bitcoin. This report outlines our study, covering two main tasks that contribute to a full understanding of the Bitcoin ecosystem.
+
+Our analysis plan in this report focuses on predicting Bitcoin prices, addressing the challenge of volatility, and understanding price trends. We also explore the community structure within Bitcoin transaction networks, examining how it changes over time and its potential links to Bitcoin price changes.
+
+\section{Data Description}
+
+The dataset under examination spans a period of two and a half years, from January 1, 2015, to June 30, 2017. It encompasses two primary types of data: Time Series and Transaction Networks, providing a comprehensive view of the Bitcoin ecosystem during this timeframe.
+
+\subsection{Time Series Data}
+
+The Time Series data is a crucial component of our study, offering insights into various aspects of the Bitcoin network, including Bitcoin price dynamics, mining activities, and detailed transaction information. Each file within this category is meticulously categorized by the corresponding year, with a particular emphasis on the year 2015.
+
+TODO
+
+\subsection{Transaction Networks}
+
+The Transaction Networks section comprises daily transaction network files that encapsulate exchanges between major participants in the Bitcoin network. Each file within this category delineates key attributes, such as source, target, transaction value, and the count of transactions. Table \ref{tab:transaction_sample} provides a sample of the data:
+
+\begin{table}[h]
+    \centering
+    \caption{Sample of Transaction Network Data}
+    \label{tab:transaction_sample}
+    \begin{tabular}{|l|l|r|r|}
+        \hline
+        \textbf{Source} & \textbf{Target} & \textbf{Value} & \textbf{Number of Transactions} \\
+        \hline
+        ePay.info\_CoinJoinMess & CloudBet.com & 3,519,173 & 1 \\
+        Cex.io & 1956 & 8,491,196 & 3 \\
+        157228 & C-Cex.com & 10,833,480,021 & 1 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+These records form the foundation for our analysis of the community structure within the Bitcoin transaction networks. The attributes such as "Source" and "Target" denote the participants involved, "Value" represents the transaction value, and "Number of Transactions" indicates the count of transactions between the specified participants. This detailed information is crucial for understanding the dynamics and relationships within the Bitcoin transaction network.
+
+\newpage
+
+\section{Price Prediction Analysis}
+
+In this section, we embark on the challenging task of predicting the price dynamics of Bitcoin (BTC). Our approach involves two distinct strategies aimed at forecasting the future price movements of this cryptocurrency. The first method employs a classification framework, seeking to predict whether the price will increase or decrease based on the information from the preceding 6 days. The second method adopts a regression approach, focusing on predicting the actual numerical value of Bitcoin's price at a given time.
+
+\subsection{Price variation prediction}
+TODO
+%  NOTES (idees generales) POUR LES IDEES DE Variation %
+% 1 - analyses general des 3 csv
+% 2 - premier test avec juste external (meme avec bon resultats aller plus loin)
+% FEATURES EXTRACTION %
+% 3 - aller plus loin sur les analyse et essayer de chercher des nouveles features en ajoutant global.csv + (std, min, max, mean) de by_actor.csv pour pouvoir trouver des nouveau features.
+% apres l'extraction etude de correlation 
+% 4 - faire des experimentations avec les meilleurs features trouvee avec un model.
+% 5 - experimentation avec plusieurs model 
+% 6 - analyser les resultats avec le plot de predections de chaque model avec le meileur top n features (n petit avec une meilleure accuracy)
+% train sur 2015 pour predicter task1.
+
+\subsection{Price prediction}
+TODO
+
+\section{Network Analysis}
+In this section, we delve into the intricate structure and dynamics of Bitcoin's transaction networks. Our exploration focuses on daily exchanges among major participants, revealing key attributes such as source, target, transaction value, and count. Through network analysis methodologies, we seek to unveil patterns and correlations, shedding light on the evolution and community structures within Bitcoin's transactional landscape.
+
+Our subsequent focus involved a meticulous analysis of the community structure within the Bitcoin transaction networks. The overarching goal was to gain a profound understanding of the temporal dynamics and homogeneity of these communities.
+
+We endeavored to answer fundamental questions:
+\begin{itemize}
+    \item Is the community structure stable over time, or does it undergo changes?
+    \item How homogeneous are the identified communities? \\
+\end{itemize}
+
+Additionally, we explored the identification of key actors within each community, aiming to discern influential figures exerting significant influence over their respective communities.
+
+\subsection{Community Detection}
+
+Our primary objective was to identify communities within the network. The '\textit{Network}' class in our experiment implements both the \textbf{Louvain} method and the \textbf{Girvan-Newman} method for community detection. Utilizing these methods, we sought to discern the inherent groupings within the Bitcoin transaction networks. 
+
+\subsubsection{Community Detection: Louvain Method}
+
+Our exploration into community detection utilized the \textbf{Louvain} method. This method, known for its ability to efficiently handle large-scale networks, making it suitable for the complexity inherent in Bitcoin transaction networks.
+
+The louvain algorithm requires the input graph to be undirected. The resulting communities represent major participants with shared transactional patterns.
+
+This method identified a total of \textbf{six communities} within the Bitcoin transaction networks. Table \ref{tab:louvain_community_summary} provides a summary of the identified communities, including the number of participants, total transaction volume, and the number of transactions.
+
+\begin{table}[!htb]
+    \centering
+    \caption{Summary of Louvain Community Characteristics}
+    \label{tab:louvain_community_summary}
+    \resizebox{\textwidth}{!}{%
+        \begin{tabular}{|c|c|c|c|c|c|c|}
+            \hline
+            \textbf{Community ID} & \textbf{Volume} & \textbf{Nb Transactions} & \textbf{Nb Unique Transactions} & \textbf{Nb Actors} & \textbf{Avg Transactions/Actor} & \textbf{Avg Unique Transactions/Actor} \\
+            \hline
+            1 & 470,733,747,003,758,253 & 30,368,011 & 3,586,359 & 3455 & 8789.58 & 1038.02 \\
+            4 & 71,969,700,748,890,746 & 1,913,134 & 246,071 & 580 & 3298.51 & 424.26 \\
+            3 & 38,032,054,174,827,888 & 3,923,935 & 1,399,989 & 4674 & 839.524 & 299.527 \\
+            5 & 1,558,612,032,390,306 & 871,912 & 143,790 & 673 & 1295.56 & 213.655 \\
+            6 & 571,187,028,474,579 & 571,837 & 491,564 & 544 & 1051.17 & 903.61 \\
+            2 & 25,817,838,398,784 & 17,593 & 8,961 & 49 & 359.041 & 182.878 \\
+            \hline
+            \textbf{Average} & 9.71486e+16 & 6.27774e+06 & 979,456 & 1662.5 & 2605.56 & 510.325 \\
+            \hline
+        \end{tabular}%
+    }
+\end{table}
+
+Checkout the \textbf{Community Detection Louvain}\ref{fig:louvain_overview_communities} section in the \textbf{Annexes} for more details.
+
+
+Upon examining the identified communities, several notable observations emerge:
+
+Community 1 stands out as the largest and most active community, with a transaction volume of 470,733,747,003,758,253 and a total of 30,368,011 transactions.
+It also has the highest number of unique transactions, with 3,586,359. This community consists of 3455 actors, resulting in an average of 8789.58 transactions per actor and 1038.02 unique transactions per actor wich is two times the average of the other communities.
+However, we still don't know if the activity of this community is due to a single actor or multiple actors.
+
+Community 4 has a significantly smaller transaction volume and number of transactions compared to Community 1. It consists of 580 actors and has an average of 3298.51 transactions per actor and 424.26 unique transactions per actor.
+
+Community 3, the second-largest community, has a transaction volume of 38,032,054,174,827,888 and a total of 3,923,935 transactions. It has 1,399,989 unique transactions and 4674 actors. On average, each actor in this community has 839.524 transactions and 299.527 unique transactions.
+
+The remaining communities (2, 5, and 6) have even smaller transaction volumes, numbers of transactions, and numbers of actors compared to the previous communities.
+Further analysis will delve into the temporal dynamics and homogeneity of these communities, providing a more nuanced understanding of their evolution and significance within the broader network structure.
+
+
+\subsubsection{Community Detection : Girvan-Newman Method}
+TODO
+
+\subsection{Evolution of the communities}
+The community structure within the Bitcoin transaction networks is not static. It undergoes changes over time as actors participate in different transactions.
+This section explores the temporal dynamics of the communities, seeking to discern the evolution of the community structure over time.
+
+\subsubsection{Community Evolution: Louvain Method}
+
+Our goal was to examine the evolution of the communities over time, seeking to discern the temporal dynamics of the community structure. 
+We focused on the evolution of the six communities identified by the Louvain method, analyzing the changes in their transaction volumes over time.
+
+The main purpose of this analysis was to determine whether the communities transitioned between different states over time or remained stable. 
+We also sought to identify the communities activity were increasing or decreasing at the same time, if there was a kind of trend or pattern in the evolution of the communities.
+
+So we plotted the evolution of the transaction volume of each community over time.
+The activity of the communities varies over time, with some communities experiencing a significant increase in activity, while others seems at first to remain stable \ref{fig:louvain_evolution_over_time}. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{louvain_evolution_over_time.png}
+    \caption{Evolution over time - Total Volume exchanged by community}
+    \label{fig:louvain_evolution_over_time}
+\end{figure}
+
+To have a better understanding of the evolution of the communities, we normalized the transaction volumes of each community by dividing them by the total transaction volume of the network at each time step,
+enable us to compare the evolution of the communities over time \ref{fig:louvain_evolution_over_time_normalized}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{louvain_evolution_over_time_normalized.png}
+    \caption{Enter Caption}
+    \label{fig:enter-label}
+\end{figure}
+
+We can see that there is no kind of stability in the transaction volumes of the communities over time. We also notice that the communities are 
+not active at the same time, for instance, Community 2, 7, 4 have a peak of activity at different periods of time.
+But at the same time we can notice that the Community 1 and 4 seems to overlap in their activity, arround the July 2016.
+
+To refine our analysis, we applied a moving average to the normalized transaction volumes of each community, 
+seeking to discern the underlying trends in the evolution of the communities over time \ref{fig:louvain_evolution_over_time_normalized_moving_average}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{louvain_evolution_over_time_normalized_moving_average.png}
+    \caption{Enter Caption}
+    \label{fig:enter-label}
+\end{figure}
+
+We can now start to see some kind of trend between the communities, for example, between 2016-04 and 2016-10, the transaction volumes
+of most communities are increasing significantly.
+
+So we might think that the communities transaction volumes are correlated, wich means that at some period of time, 
+the communities increase or decrease their activity. 
+To confirm this hypothesis, we computed the correlation between the transaction volumes of the communities \ref{fig:louvain_correlation_matrix}.
+
+\begin{figure}[h]
+    \begin{minipage}{0.5\linewidth}
+        \includegraphics[width=\linewidth]{louvain_correlation_matrix.png}
+        \caption{Correlation Between Moving Average of Normalized Transaction Volumes}
+        \label{fig:enter-label}
+    \end{minipage}%
+    \hspace{0.05\linewidth} % Add a 5% width margin
+    \begin{minipage}{0.45\linewidth}
+        We can see that the transaction volumes of some communities are highly correlated, for example, the transaction volumes of Community 1 and 4 are highly correlated, with a correlation coefficient of 0.73. So our two biggest communities are correlated over time, which means that there is a high probability that the activity of these communities is linked in some way. \\
+        
+        We can also notice that the transaction volumes of Community 2 and 1 are inversely correlated, with a correlation coefficient of -0.48. The community 2 is the smallest community, so it seems that when Community 1 is active, Community 2 is less active and vice versa.
+        \vfill
+    \end{minipage}
+\end{figure}
+
+
+In conclusion, we can say that the Community 1 and 4 are the most active communities, and their activity is correlated over time. 
+One hypothesis we can do now is that if we find a correlation between the activity of these communities and the price of Bitcoin, 
+then we could be able to predict the trend of the price of Bitcoin. But before that, we would like to understand the homogeneity of the communities,
+is there key actors in each community that influence the activity of the community ?
+
+We will try to analyze the top actors in each community, and see if these actors are what we call "key actors" that influence the activity of the community.
+
+
+\subsubsection{Community Evolution: Girvan-Newman Method}
+TODO
+
+
+\newpage
+
+\section{Annexes}
+
+\subsection{Community Detection Louvain}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{louvain_overview_communities.png}
+    \caption{Community Detection Louvain: Overview of the Network}
+    \label{fig:louvain_overview_communities}
+\end{figure}
+
+
+
+
+\end{document} 
