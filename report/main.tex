@@ -137,6 +137,8 @@ TODO
 \subsection{Price prediction}
 TODO
 
+\newpage
+
 \section{Network Analysis}
 In this section, we delve into the intricate structure and dynamics of Bitcoin's transaction networks. Our exploration focuses on daily exchanges among major participants, revealing key attributes such as source, target, transaction value, and count. Through network analysis methodologies, we seek to unveil patterns and correlations, shedding light on the evolution and community structures within Bitcoin's transactional landscape.
 
@@ -171,38 +173,41 @@ This method identified a total of \textbf{six communities} within the Bitcoin tr
             \hline
             \textbf{Community ID} & \textbf{Volume} & \textbf{Nb Transactions} & \textbf{Nb Unique Transactions} & \textbf{Nb Actors} & \textbf{Avg Transactions/Actor} & \textbf{Avg Unique Transactions/Actor} \\
             \hline
-            1 & 470,733,747,003,758,253 & 30,368,011 & 3,586,359 & 3455 & 8789.58 & 1038.02 \\
-            4 & 71,969,700,748,890,746 & 1,913,134 & 246,071 & 580 & 3298.51 & 424.26 \\
-            3 & 38,032,054,174,827,888 & 3,923,935 & 1,399,989 & 4674 & 839.524 & 299.527 \\
-            5 & 1,558,612,032,390,306 & 871,912 & 143,790 & 673 & 1295.56 & 213.655 \\
-            6 & 571,187,028,474,579 & 571,837 & 491,564 & 544 & 1051.17 & 903.61 \\
-            2 & 25,817,838,398,784 & 17,593 & 8,961 & 49 & 359.041 & 182.878 \\
+            1 & 468,832,339,336,904,756 & 30,327,386 & 3,542,608 & 3,481 & 8,712.26 & 1,017.7 \\
+            4 & 71,793,322,779,010,889 & 1,920,300 & 249,541 & 589 & 3,260.27 & 423.669 \\
+            6 & 38,036,926,674,557,446 & 3,931,898 & 1,403,105 & 4,685 & 839.253 & 299.489 \\
+            2 & 2,539,459,537,692,511 & 886,701 & 171,234 & 622 & 1,425.56 & 275.296 \\
+            5 & 1,663,252,660,176,170 & 582,544 & 501,285 & 549 & 1,061.1 & 913.087 \\
+            3 & 26,017,838,398,784 & 17,593 & 8,961 & 49 & 359.041 & 182.878 \\
             \hline
-            \textbf{Average} & 9.71486e+16 & 6.27774e+06 & 979,456 & 1662.5 & 2605.56 & 510.325 \\
+            \textbf{Average} & 9.71486e+16 & 6.27774e+06 & 979,456 & 1,662.5 & 2,609.58 & 518.686 \\
             \hline
         \end{tabular}%
     }
 \end{table}
 
-Checkout the \textbf{Community Detection Louvain}\ref{fig:louvain_overview_communities} section in the \textbf{Annexes} for more details.
+Checkout the \textbf{Community Detection Louvain} \ref{fig:louvain_overview_communities} section in the \textbf{Annexes} for more details.
 
 
 Upon examining the identified communities, several notable observations emerge:
 
-Community 1 stands out as the largest and most active community, with a transaction volume of 470,733,747,003,758,253 and a total of 30,368,011 transactions.
-It also has the highest number of unique transactions, with 3,586,359. This community consists of 3455 actors, resulting in an average of 8789.58 transactions per actor and 1038.02 unique transactions per actor wich is two times the average of the other communities.
+Community 1 stands out as the largest and most active community, with a total transaction volume of 468,832,339,336,904,756 and a total of 30,327,386 transactions.
+It also has the highest number of unique transactions, with 3,542,608. This community consists of 3,481 actors, resulting in an average of 8,712.26 transactions per actor and 1,017.7 unique transactions per actor which is two times the average of the other communities.
 However, we still don't know if the activity of this community is due to a single actor or multiple actors.
 
-Community 4 has a significantly smaller transaction volume and number of transactions compared to Community 1. It consists of 580 actors and has an average of 3298.51 transactions per actor and 424.26 unique transactions per actor.
+Community 4 has a significantly smaller transaction volume and number of transactions compared to Community 1. It consists of 589 actors and has an average of 3,260.27 transactions per actor and 423.669 unique transactions per actor.
 
-Community 3, the second-largest community, has a transaction volume of 38,032,054,174,827,888 and a total of 3,923,935 transactions. It has 1,399,989 unique transactions and 4674 actors. On average, each actor in this community has 839.524 transactions and 299.527 unique transactions.
+Community 6, regroup 4,685 actors and make it the largest in terms of size. This community has a transaction volume of 38,036,926,674,557,446 and a total of 3,931,898 transactions. 
+It has 1,403,105 unique transactions and 4,685 actors. On average, each actor in this community has 839.253 transactions and 299.489 unique transactions.
 
-The remaining communities (2, 5, and 6) have even smaller transaction volumes, numbers of transactions, and numbers of actors compared to the previous communities.
+The remaining communities (2, 5, and 3) have even smaller transaction volumes, numbers of transactions, and numbers of actors compared to the previous communities.
 Further analysis will delve into the temporal dynamics and homogeneity of these communities, providing a more nuanced understanding of their evolution and significance within the broader network structure.
 
 
 \subsubsection{Community Detection : Girvan-Newman Method}
 TODO
+
+\newpage
 
 \subsection{Evolution of the communities}
 The community structure within the Bitcoin transaction networks is not static. It undergoes changes over time as actors participate in different transactions.
@@ -217,36 +222,35 @@ The main purpose of this analysis was to determine whether the communities trans
 We also sought to identify the communities activity were increasing or decreasing at the same time, if there was a kind of trend or pattern in the evolution of the communities.
 
 So we plotted the evolution of the transaction volume of each community over time.
-The activity of the communities varies over time, with some communities experiencing a significant increase in activity, while others seems at first to remain stable \ref{fig:louvain_evolution_over_time}. 
+The activity of the communities varies over time, with some communities experiencing a significant increase in activity, while others seems at first to remain stable. 
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1\linewidth]{louvain_evolution_over_time.png}
+    \includegraphics[width=1\linewidth]{./network_analysis/louvain_method/louvain_evolution_over_time.png}
     \caption{Evolution over time - Total Volume exchanged by community}
     \label{fig:louvain_evolution_over_time}
 \end{figure}
 
-To have a better understanding of the evolution of the communities, we normalized the transaction volumes of each community by dividing them by the total transaction volume of the network at each time step,
-enable us to compare the evolution of the communities over time \ref{fig:louvain_evolution_over_time_normalized}.
+To have a better understanding of the evolution of the communities, we normalized the transaction volumes of each community by dividing them by the total transaction volume of the network at each time step, enable us to compare the evolution of the communities over time.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1\linewidth]{louvain_evolution_over_time_normalized.png}
-    \caption{Enter Caption}
+    \includegraphics[width=1\linewidth]{./network_analysis/louvain_method/louvain_evolution_over_time_normalized.png}
+    \caption{Evolution over time - Normalized Total Volume exchanged by community}
     \label{fig:enter-label}
 \end{figure}
 
 We can see that there is no kind of stability in the transaction volumes of the communities over time. We also notice that the communities are 
-not active at the same time, for instance, Community 2, 7, 4 have a peak of activity at different periods of time.
-But at the same time we can notice that the Community 1 and 4 seems to overlap in their activity, arround the July 2016.
+not active at the same time, for instance, Community 1, 4, 6 have a peak of activity at different periods of time.
+But at the same time we can notice that the Community 2 and 4 seems to overlap in their activity, arround the July 2016.
 
 To refine our analysis, we applied a moving average to the normalized transaction volumes of each community, 
-seeking to discern the underlying trends in the evolution of the communities over time \ref{fig:louvain_evolution_over_time_normalized_moving_average}.
+seeking to discern the underlying trends in the evolution of the communities over time.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1\linewidth]{louvain_evolution_over_time_normalized_moving_average.png}
-    \caption{Enter Caption}
+    \includegraphics[width=1\linewidth]{./network_analysis/louvain_method/louvain_evolution_over_time_normalized_moving_average.png}
+    \caption{Evolution over time - Moving Average of Normalized Total Volume exchanged by community}
     \label{fig:enter-label}
 \end{figure}
 
@@ -259,15 +263,18 @@ To confirm this hypothesis, we computed the correlation between the transaction 
 
 \begin{figure}[h]
     \begin{minipage}{0.5\linewidth}
-        \includegraphics[width=\linewidth]{louvain_correlation_matrix.png}
+        \includegraphics[width=\linewidth]{./network_analysis/louvain_method/louvain_correlation_matrix.png}
         \caption{Correlation Between Moving Average of Normalized Transaction Volumes}
-        \label{fig:enter-label}
+        \label{fig:louvain_correlation_matrix}
     \end{minipage}%
     \hspace{0.05\linewidth} % Add a 5% width margin
     \begin{minipage}{0.45\linewidth}
-        We can see that the transaction volumes of some communities are highly correlated, for example, the transaction volumes of Community 1 and 4 are highly correlated, with a correlation coefficient of 0.73. So our two biggest communities are correlated over time, which means that there is a high probability that the activity of these communities is linked in some way. \\
+        We can see that the transaction volumes of some communities are highly correlated, for example,
+        the transaction volumes of Community 1 and 5 are highly correlated, with a correlation coefficient of 0.70.
+        So some communities are correlated over time, which means that there is a high probability that the activity of these communities is linked in some way. \\
         
-        We can also notice that the transaction volumes of Community 2 and 1 are inversely correlated, with a correlation coefficient of -0.48. The community 2 is the smallest community, so it seems that when Community 1 is active, Community 2 is less active and vice versa.
+        The transaction volumes of Community 2 and 5 are also correlated, with a correlation coefficient of 0.53.
+        Understanding the correlation between the communities will help us to understand the evolution of the communities over time. \\
         \vfill
     \end{minipage}
 \end{figure}
@@ -280,9 +287,142 @@ is there key actors in each community that influence the activity of the communi
 
 We will try to analyze the top actors in each community, and see if these actors are what we call "key actors" that influence the activity of the community.
 
+\newpage
 
 \subsubsection{Community Evolution: Girvan-Newman Method}
 TODO
+
+\newpage
+
+\subsection{Communities Key Actors}
+In this section, we will try to identify the key actors in each community, and see if these actors are what we call "key actors" that influence the activity of the community.
+
+\subsubsection{Communities Key Actors: Louvain Method}
+
+First of all, here is a summary of the top tens actors indepedently of the community they belong to \ref{fig:louvain_top_ten_actors_vs_community}.
+As we can see the biggest actor \textbf{ePay.info\_CoinJoinMess} belongs to the biggest community \textbf{1}.
+Moreover out of the top ten actors, five of them belong to the biggest community \textbf{1}.
+
+Our objective is to identify the key actors in each community, and see if these actors are what we call "key actors" that influence the activity of the community.
+To do so, we will plot the moving average of the normalized transaction volumes of the top ten actors in each community and try to find some correlation between the activity of the actors and the activity of the community.
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{network_analysis//louvain_method/key_actors_community_1.png}
+    \caption{Comparison of the Transaction Volumes of the Top Ten Actors in Community 1}
+    \label{fig:enter-label}
+\end{figure}
+
+As we can see it is difficult to find a correlation between the activity of the actors and the activity of the community,
+but we can still notice that the activity of the actor \textbf{ePay.info\_CoinJoinMess} and \textbf{Poloniex.com} 
+seems to be correlated with the activity of the community.
+
+Morover, we can see that some actors are not active all the time, for example, the curve of the actor \textbf{ePay.info\_CoinJoinMess},
+is off between 2015-10 and 2016-07, suggesting that this actor was not active during this period of time. 
+You can check the other communities in the \textbf{Annexes} \ref{fig:louvain_overview_key_actors}. \\ 
+
+As we can see it is difficult to find a trends between the activity of the actors and the activity of the community, by reading the plots.
+So we will try to find a correlation between the activity of the actors and the activity of the community,
+by computing the correlation between the moving average of the normalized transaction volumes of the actors
+and the moving average of the normalized transaction volumes of the community.
+
+\newpage
+
+\begin{table}[!htb]
+    \begin{minipage}{0.5\linewidth}
+        \centering
+        \caption{Correlation Between Moving Average of Normalized Transaction Volumes}
+        \label{tab:louvain_correlation_matrix}
+        \resizebox{\textwidth}{!}{%
+            \begin{tabular}{|c|c|c|}
+                \hline
+                \textbf{Community ID} & \textbf{Actor ID} & \textbf{Correlation} \\
+                \hline
+                1 & Poloniex.com & 0.74 \\
+                2 & Matbea.com & 0.67 \\
+                5 & 6048154 & 0.63 \\
+                \hline
+            \end{tabular}%
+        }
+    \end{minipage}%
+    \hspace{0.05\linewidth} % Add a 5% width margin
+    \begin{minipage}{0.45\linewidth}
+        For our analysis we only considered the actors that have a correlation coefficient greater than 0.6.
+        We can see that some actors are correlated with the activity of the community, for example, the actor
+    \end{minipage}
+\end{table}
+\textbf{Poloniex.com} is correlated with the activity of the community 1, with a correlation coefficient of 0.74. 
+So these actors are what we call "key actors" that influence the activity of the community. If one of these Community
+is also correlated with the price of Bitcoin, then we could be able to predict the trend of the price of Bitcoin by 
+monitoring not only the activity of the community but also the activity of the key actors.
+
+\newpage
+
+
+\subsubsection{Communities Key Actors: Girvan-Newman Method}
+TODO
+
+\newpage
+
+\subsection{Communities and Bitcoin Price}
+
+In this section, we will try to find a correlation between the activity of the communities and the price of Bitcoin.
+We will plot the moving average of the normalized transaction volumes of the communities and the moving average of the normalized price of Bitcoin,
+and try to find some correlation between the activity of the communities and the price of Bitcoin.
+
+\subsubsection{Communities and Bitcoin Price: Louvain Method}
+
+We plotted curve to compare the behavior of the communities and the price of Bitcoin over time. 
+The results are shown in Figure \ref{fig:louvain_communities_btc_price}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{btc_community_1.png}
+    \caption{Comparison of the Bitcoin Price and the Transaction Volumes of Community 1}
+    \label{fig:enter-label}
+\end{figure}
+
+As we can see, there seem to be a high correlation between the activity of the community 1 and the price of Bitcoin. The Community 1 
+is the biggest community in terms of transaction volume, and it is also the most active community. 
+
+Here is a summary of the correlation between the activity of the communities and the price of Bitcoin \ref{tab:louvain_correlation_matrix_btc}.
+
+\begin{table}[!h]
+    \begin{minipage}{0.35\linewidth}
+        \centering
+        \label{tab:louvain_correlation_matrix_btc}
+        \resizebox{\textwidth}{!}{%
+            \begin{tabular}{|c|c|c|}
+                \hline
+                \textbf{Community ID} & \textbf{Correlation} \\
+                \hline
+                1 & 0.71 \\
+                4 & 0.49 \\
+                6 & -0.21 \\
+                2 & 0.37 \\
+                5 & 0.68 \\
+                3 & -0.06 \\
+                \hline
+            \end{tabular}%
+        }
+        \caption{Correlation BTC / Community}
+    \end{minipage}%
+    \hspace{0.05\linewidth} % Add a 5% width margin
+    \begin{minipage}{0.60\linewidth}
+        We can see that the activity of the community 1 is indeed highly correlated with the price of Bitcoin,
+        with a correlation coefficient of 0.71. Morover, the activity of the community 5 is also correlated with the price of Bitcoin,
+        with a correlation coefficient of 0.68.
+
+        The Community 4 is also correlated with the price of Bitcoin, with a correlation coefficient of 0.49, but the correlation is not as strong as the Community 1 and 5. \\
+    \end{minipage}
+\end{table}
+
+So based on these results, we can say that the activity of the communities 1, 4 and 5 are correlated with the price of Bitcoin. 
+So if we monitor the activity of these communities, we could be able to predict the trend of the price of Bitcoin, 
+based on the activity of these communities. Morover, from our previous analysis, 
+we know that the activity of the community 1 is correlated with the activity of the actor \textbf{Poloniex.com}, 
+and the activity of the community 5 is correlated with the activity of the actor \textbf{6048154}. 
 
 
 \newpage
@@ -293,11 +433,35 @@ TODO
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1\linewidth]{louvain_overview_communities.png}
+    \includegraphics[width=1\linewidth]{./network_analysis/louvain_method/louvain_overview_communities.png}
     \caption{Community Detection Louvain: Overview of the Network}
     \label{fig:louvain_overview_communities}
 \end{figure}
 
+\subsection{Communities Key Actors: Louvain Method}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{network_analysis//louvain_method/overview_key_actors.png}
+    \caption{Communities Key Actors: Overview of the Network}
+    \label{fig:louvain_overview_key_actors}
+\end{figure}
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{network_analysis//louvain_method/key_actors_community.png}
+    \caption{Comparison of the Transaction Volumes of the Top Ten Actors for each Community}
+    \label{fig:louvain_top_ten_actors_vs_community}
+\end{figure}
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{network_analysis//louvain_method/communities_btc_price.png}
+    \caption{Comparison of the Bitcoin Price and the Transaction Volumes of the Communities}
+    \label{fig:louvain_communities_btc_price}
+\end{figure}
 
 
 

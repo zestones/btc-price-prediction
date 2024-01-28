@@ -1,0 +1,11 @@
+python-louvain
+plotly
+tabulate
+pandas
+numpy
+scikit-learn
+community
+matplotlib
+seaborn
+networkx
+nbformat>=4.2.0
