@@ -21,7 +21,7 @@ class Network(Graph):
             for transaction in actor.transactions:
                 self.add_transaction(transaction)
                 
-    def process_communities_networkx(self):
+    def process_communities_girvan_newman(self):
         self.communities = list(greedy_modularity_communities(self._graph))
                 
     def process_communities_louvain(self):

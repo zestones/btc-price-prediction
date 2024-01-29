@@ -73,6 +73,6 @@ class Transaction:
         Print the transaction.
         """
         table = [["Source", "Target", "Value", "Date", "Number of transactions"]]
-        table.append([self.source.name, self.target.name, self.value, self.date, self.nb_transactions])
+        table.append([self.source.get_name(), self.target.get_name(), self.value, self.date, self.nb_transactions])
 
         print(tabulate.tabulate(table, headers="firstrow"))

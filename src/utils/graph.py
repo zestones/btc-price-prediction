@@ -1,4 +1,3 @@
-from networkx.algorithms.community import greedy_modularity_communities
 import matplotlib.pyplot as plt
 import networkx as nx
 

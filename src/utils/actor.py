@@ -64,12 +64,11 @@ class Actor:
             volume_day = sum([transaction.get_value() for transaction in transactions])
             nb_transactions_day = sum([transaction.get_nb_transactions() for transaction in transactions])
             
-            transaction = Transaction(self, actor, volume_day, nb_transactions_day, transaction_date)
-            self.transactions_volume_by_day.append(transaction)   
-         
+            self.transactions_volume_by_day.append(Transaction(self, actor, volume_day, nb_transactions_day, transaction_date))   
+        
         self.transactions_volume_by_day = sorted(self.transactions_volume_by_day, key=lambda x: x.get_date())
         return self.transactions_volume_by_day
-            
+    
     def set_community(self, community):
         """
         Set the community to which this actor belongs.
@@ -169,13 +168,13 @@ class Actor:
         
         print(tabulate.tabulate(table, headers="firstrow"))
         
-    def print_transactions(self):
+    def print_transactions(self, transactions):
         """
         Print the transactions of this actor.
         """
         table = [["Source", "Target", "Value", "Date", "Nb Transactions"]]
         
-        for transaction in self.transactions:
+        for transaction in transactions:
             table.append([transaction.source.name, transaction.target.name, transaction.value, transaction.date, transaction.nb_transactions])
         
         print(tabulate.tabulate(table, headers="firstrow"))
