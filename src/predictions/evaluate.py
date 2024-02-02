@@ -40,7 +40,7 @@ class Evaluate:
   def evaluate_model_with_mape(self):
     return mean_absolute_percentage_error(self.actual.flatten(), self.predictions.flatten())
   
-  def plot(self):
+  def plot_points(self):
     plt.figure(figsize=(12, 6))
     plt.scatter(range(len(self.actual)), self.actual, label='Real Price', color='blue')
     plt.scatter(range(len(self.predictions)), self.predictions, label='Predicted Price', color='orange')
@@ -50,7 +50,17 @@ class Evaluate:
     plt.legend()
     plt.show()
   
-  def print(self):
+  def plot_lines(self):
+    plt.figure(figsize=(12, 6))
+    plt.plot(range(len(self.actual)), self.actual, label='Real Price', color='blue')
+    plt.plot(range(len(self.predictions)), self.predictions, label='Predicted Price', color='orange')
+    plt.title('Bitcoin Price Prediction')
+    plt.xlabel('Time')
+    plt.ylabel('Price (USD)')
+    plt.legend()
+    plt.show()
+  
+  def print_scores(self):
     table = [
       ['MSE', self.mse],
       ['RMSE', self.rmse],
@@ -60,3 +70,7 @@ class Evaluate:
       ['Variance Ratio', self.var_ratio]
     ]
     print(tabulate.tabulate(table, headers=['Metric', 'Value'], tablefmt='github'))
+
+  def print_comparison(self):
+    comparison_list = [{'Actual': a, 'Predicted': p} for a, p in zip(self.actual, self.predictions)]
+    print(tabulate.tabulate(comparison_list, headers='keys', tablefmt='github'))

@@ -16,14 +16,22 @@ class ETL:
         
         self._scaler = MinMaxScaler(feature_range=(0, 1))
 
-        self.train, self.test = self.extract_transform_load()
-        self.train_x, self.train_y = self._window(self.train)
-        self.test_x, self.test_y = self._window(self.test) 
+        # Charger et mettre à l'échelle les données
+        df = self._load()
+        data_values = self._extract(df)
+        data_scaled = self.scale(data_values)
         
+        # Créer des séquences
+        self.data_x, self.data_y = self._window(data_scaled)
+        
+        # Diviser en ensembles d'entraînement et de test
+        self.train_x, self.test_x, self.train_y, self.test_y = self._train_test_split(self.data_x, self.data_y)
+    
     def extract_transform_load(self) -> (np.array, np.array):
         df = self._load()
         data_values = self._extract(df)
-        train, test = self._transform(data_values)
+        train, test = self._train_test_split(data_values)
+        #train, test = self._transform(data_values)
         return train, test
 
     def _extract(self, df: pd.DataFrame) -> np.array:
@@ -33,9 +41,14 @@ class ETL:
         data_scaled = self.scale(data)
         return self._train_test_split(data_scaled)
     
-    def _train_test_split(self, data: np.array) -> (np.array, np.array):
-        train_size = int(len(data) * (1 - self.test_size))
-        return data[:train_size], data[train_size:]
+    def _train_test_split(self, data_x: np.array, data_y: np.array) -> (np.array, np.array, np.array, np.array):
+        total_size = len(data_x)
+        train_size = int(total_size * (1 - self.test_size))
+        
+        train_x, test_x = data_x[:train_size], data_x[train_size:]
+        train_y, test_y = data_y[:train_size], data_y[train_size:]
+        
+        return train_x, test_x, train_y, test_y
     
     def _window(self, data: pd.DataFrame) -> np.array:
         x, y = [], []
