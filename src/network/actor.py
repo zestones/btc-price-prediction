@@ -1,4 +1,4 @@
-from utils.transaction import Transaction
+from network.transaction import Transaction
 from collections import defaultdict
 import tabulate
 

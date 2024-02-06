@@ -1,6 +1,6 @@
-from utils.transaction import Transaction
+from network.transaction import Transaction
 from collections import defaultdict
-from utils.actor import Actor
+from network.actor import Actor
 import tabulate
 
 class Community:

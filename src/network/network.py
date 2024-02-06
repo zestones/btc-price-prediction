@@ -1,8 +1,8 @@
 from networkx.algorithms.community import greedy_modularity_communities
 import community as community_louvain
-from utils.community import Community
+from network.community import Community
 import matplotlib.pyplot as plt
-from utils.graph import Graph
+from network.graph import Graph
 import networkx as nx    
 import tabulate
 from tabulate import tabulate
