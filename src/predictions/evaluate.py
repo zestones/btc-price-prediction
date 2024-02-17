@@ -42,12 +42,24 @@ class Evaluate:
   
   def plot(self):
     plt.figure(figsize=(12, 6))
-    plt.scatter(range(len(self.actual)), self.actual, label='Real Price', color='blue')
-    plt.scatter(range(len(self.predictions)), self.predictions, label='Predicted Price', color='orange')
+
+    time_range = range(len(self.actual))
+
+    # Plotting the actual prices
+    plt.plot(time_range, self.actual, label='Real Price', color='blue', marker='o', linestyle='-')
+
+    # Plotting the predicted prices
+    plt.plot(time_range, self.predictions, label='Predicted Price', color='orange', marker='o', linestyle='--')
+
+    # Highlighting the difference between actual and predicted prices
+    diff = np.abs(np.array(self.actual) - np.array(self.predictions))
+    plt.bar(time_range, diff, alpha=0.3, color='red', label='Absolute Price Difference')
+
     plt.title('Bitcoin Price Prediction')
     plt.xlabel('Time')
     plt.ylabel('Price (USD)')
     plt.legend()
+    plt.grid(True)
     plt.show()
   
   def print(self):
