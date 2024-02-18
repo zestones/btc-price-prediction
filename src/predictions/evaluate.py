@@ -18,7 +18,6 @@ class Evaluate:
     self.var_ratio = self.compare_var()
     self.mape = self.evaluate_model_with_mape()
     self.mse = self.evaluate_model_with_mse()
-    self.rmse = self.evaluate_model_with_rmse()
     self.mae = self.evaluate_model_with_mae()
     self.r2 = self.evaluate_model_with_r2()
 
@@ -30,9 +29,6 @@ class Evaluate:
   
   def evaluate_model_with_mse(self):
     return mean_squared_error(self.actual, self.predictions)
-  
-  def evaluate_model_with_rmse(self):
-    return mean_squared_error(self.actual, self.predictions, squared=False)
   
   def compare_var(self):
     return abs(1 - (np.var(self.predictions) / np.var(self.actual)))
@@ -46,10 +42,10 @@ class Evaluate:
     time_range = range(len(self.actual))
 
     # Plotting the actual prices
-    plt.plot(time_range, self.actual, label='Real Price', color='blue', marker='o', linestyle='-')
+    plt.plot(time_range, self.actual, label='Real Price', color='blue', linestyle='-')
 
     # Plotting the predicted prices
-    plt.plot(time_range, self.predictions, label='Predicted Price', color='orange', marker='o', linestyle='--')
+    plt.plot(time_range, self.predictions, label='Predicted Price', color='orange', linestyle='--')
 
     # Highlighting the difference between actual and predicted prices
     diff = np.abs(np.array(self.actual) - np.array(self.predictions))
@@ -65,7 +61,6 @@ class Evaluate:
   def print(self):
     table = [
       ['MSE', self.mse],
-      ['RMSE', self.rmse],
       ['MAE', self.mae],
       ['R2', self.r2],
       ['MAPE', self.mape],
