@@ -21,6 +21,9 @@ class Model:
 
     def predict(self, data):
         return self.model.predict(data)
+    
+    def evaluate(self, X, y):
+        return self.model.evaluate(X, y)
 
     def save(self, path):
         joblib.dump(self.model, path)

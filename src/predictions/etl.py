@@ -1,4 +1,5 @@
 from sklearn.preprocessing import MinMaxScaler
+from typing import Tuple
 import pandas as pd
 import numpy as np
 
@@ -20,7 +21,7 @@ class ETL:
         self.train_x, self.train_y = self._window(self.train)
         self.test_x, self.test_y = self._window(self.test) 
         
-    def extract_transform_load(self) -> (np.array, np.array):
+    def extract_transform_load(self) -> Tuple[np.array, np.array]:
         df = self._load()
         data_values = self._extract(df)
         train, test = self._transform(data_values)
@@ -29,11 +30,11 @@ class ETL:
     def _extract(self, df: pd.DataFrame) -> np.array:
         return df[self.features].values
     
-    def _transform(self, data: pd.DataFrame) -> (np.array, np.array):
+    def _transform(self, data: pd.DataFrame) -> Tuple[np.array, np.array]:
         data_scaled = self.scale(data)
         return self._train_test_split(data_scaled)
     
-    def _train_test_split(self, data: np.array) -> (np.array, np.array):
+    def _train_test_split(self, data: np.array) -> Tuple[np.array, np.array]:
         train_size = int(len(data) * (1 - self.test_size))
         return data[:train_size], data[train_size:]
     
