@@ -1,14 +1,16 @@
 import numpy as np
 import pandas as pd
+import tensorflow as tf
+from typing import Tuple, List
 from predictions.models.model import Model
 
 class DES(Model):
-    def __init__(self, input_size, layer_size, output_size):
+    def __init__(self, input_size: int, layer_size: int, output_size: int):
         self.weights = [
-            np.random.randn(input_size, layer_size),
-            np.random.randn(layer_size, output_size),
-            np.random.randn(layer_size, 1),
-            np.random.randn(1, layer_size),
+            tf.random.normal((input_size, layer_size)),
+            tf.random.normal((layer_size, output_size)),
+            tf.random.normal((layer_size, 1)),
+            tf.random.normal((1, layer_size)),
         ]
                 
     def fit(self, **kwargs):
@@ -17,16 +19,16 @@ class DES(Model):
     def evaluate(self, **kwargs):
         raise NotImplementedError("This model cannot be evaluated using the evaluate method. Use the DESAgent class to evaluate it.")
        
-    def predict(self, inputs):
-        feed = np.dot(inputs, self.weights[0]) + self.weights[-1]
-        decision = np.dot(feed, self.weights[1])
-        buy = np.dot(feed, self.weights[2])
+    def predict(self, inputs: tf.Tensor) -> Tuple[tf.Tensor, tf.Tensor]:
+        feed = tf.matmul(inputs, self.weights[0]) + self.weights[-1]
+        decision = tf.matmul(feed, self.weights[1])
+        buy = tf.matmul(feed, self.weights[2])
         return decision, buy
 
-    def get_weights(self):
+    def get_weights(self) -> List[tf.Tensor]:
         return self.weights
 
-    def set_weights(self, weights):
+    def set_weights(self, weights: List[tf.Tensor]) -> None:
         self.weights = weights
         
     def save(self, path):

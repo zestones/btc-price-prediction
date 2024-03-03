@@ -2,10 +2,12 @@ from agents.strategies.deep_evolution_strategy import Deep_Evolution_Strategy as
 import matplotlib.pyplot as plt
 from typing import Tuple, List
 import numpy as np
+import tensorflow as tf
+
 
 class DataHandler:
     def __init__(self, data_points: List[float], window_size: int, skip) -> None:
-        self.data_points = data_points
+        self.data_points = tf.constant(data_points, dtype=tf.float32)
         self.train = data_points
         self.test = data_points
         
@@ -23,41 +25,44 @@ class DataHandler:
         Args:
             test_size (float): The size of the testing set.
         """
-        self.set_train_data(self.data_points[: int(len(self.data_points) * (1 - test_size))])
-        self.set_test_data(self.data_points[int(len(self.data_points) * (1 - test_size)) :])
+        train_size = int(len(self.data_points) * (1 - test_size))
         
-    def get_state(self, data, t, n):
+        train_data = self.data_points[:train_size]
+        test_data = self.data_points[train_size:]
+        
+        self.set_train_data(train_data)
+        self.set_test_data(test_data)
+              
+    def get_state(self, data: tf.Tensor, t: int, n: int) -> tf.Tensor:
         """
         Get the state for the given data, time step, and sequence length.
 
         Parameters:
-        - data: The input data.
+        - data: The input data tensor.
         - t: The current time step.
         - n: The sequence length.
 
         Returns:
-        - state: The calculated state as a numpy array.
+        - state: The calculated state as a TensorFlow tensor.
         """
         d = t - n + 1
-        block = data[d : t + 1] if d >= 0 else -d * [data[0]] + data[0 : t + 1]
-        res = []
-        for i in range(n - 1):
-            res.append(block[i + 1] - block[i])
-        return np.array([res])
+        block = tf.gather(data, indices=tf.range(d, t + 1), axis=0) if d >= 0 else tf.concat([-d * [data[0]], data[:t + 1]], axis=0)
+        res = tf.subtract(block[1:], block[:-1])
+        return tf.expand_dims(res, axis=0)
     
     def set_train_data(self, data: List[float]) -> None:
         """
         Sets the training data.
         """
-        self.train = data
-        self.length_train = len(self.train) - 1
+        self.train = tf.constant(data, dtype=tf.float32)
+        self.length_train = len(data) - 1
         
     def set_test_data(self, data: List[float]) -> None:
         """
         Sets the testing data.
         """
-        self.test = data
-        self.length_test = len(self.test) - 1
+        self.test = tf.constant(data, dtype=tf.float32)
+        self.length_test = len(data) - 1
 
     def set_window_size(self, window_size: int) -> None:
         """
@@ -119,11 +124,11 @@ class DESAgent(DataHandler):
             """
             self.es.train(iterations, print_every=checkpoint)
 
-    def act(self, sequence: List[np.ndarray]) -> Tuple[int, float]:
-        decision, buy = self.model.predict(np.array(sequence))
-        return np.argmax(decision[0]), float(buy[0])
+    def act(self, sequence: tf.Tensor) -> Tuple[int, float]:
+        decision, buy = self.model.predict(sequence)
+        return tf.argmax(decision[0]), float(buy[0])
     
-    def _calculate_buy_units(self, initial_money: float, price: float, buy: float, t: int) -> float:
+    def _calculate_buy_units(self, initial_money: float, price: tf.Tensor, buy: float, t: int) -> float:
         if buy < 0:
             # buy unit is 10% of what you can afford
             buy_units = (initial_money * 0.1) / price[t]
@@ -131,24 +136,24 @@ class DESAgent(DataHandler):
             # if we want to buy more than we can afford
             # restrict buy_units to the maximum we can buy with the money we have
             # without going into debt and without exceeding the maximum buy limit
-            buy_units = min((initial_money * 0.9) / price[t], self.max_buy)
+            buy_units = tf.minimum((initial_money * 0.9) / price[t], self.max_buy)
         else:
             buy_units = buy
             
         return buy_units
     
     def _calculate_sell_units(self, quantity: float) -> float:
-        return self.max_sell if quantity > self.max_sell else quantity
-
-    def get_reward(self, weights: List[np.ndarray]) -> float:
+        return tf.minimum(self.max_sell, quantity)
+    
+    def get_reward(self, weights: tf.Tensor) -> float:
         initial_money = self.initial_money
         starting_money = initial_money
         
         self.model.weights = weights
         state = self.get_state(self.train, 0, self.window_size + 1)
         
-        inventory = []
-        quantity = 0
+        inventory = tf.constant([], dtype=tf.float32)
+        quantity = tf.constant(0, dtype=tf.float32)
         
         for t in range(0, self.length_train, self.skip):
             action, buy = self.act(state)
@@ -159,10 +164,10 @@ class DESAgent(DataHandler):
                 
                 total_buy = buy_units * self.train[t]
                 initial_money -= total_buy
-                inventory.append(total_buy)
+                inventory = tf.concat([inventory, [total_buy]], axis=0)
                 quantity += buy_units
                 
-            elif action == self.SELL_ACTION and len(inventory) > 0:
+            elif action == self.SELL_ACTION and tf.size(inventory) > 0:
                 sell_units = self._calculate_sell_units(quantity)
                     
                 quantity -= sell_units
@@ -170,7 +175,8 @@ class DESAgent(DataHandler):
                 initial_money += total_sell
 
             state = next_state
-        return ((initial_money - starting_money) / starting_money) * 100
+            
+        return tf.divide((initial_money - starting_money), starting_money) * 100
 
     def buy(self):
         initial_money = self.initial_money

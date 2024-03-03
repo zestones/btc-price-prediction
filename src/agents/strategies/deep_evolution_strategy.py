@@ -1,5 +1,6 @@
 import time
 import numpy as np
+import tensorflow as tf
 from typing import List, Callable
 
 class Deep_Evolution_Strategy:
@@ -23,8 +24,8 @@ class Deep_Evolution_Strategy:
 
     def __init__(
         self,
-        weights: List[np.ndarray],
-        reward_function: Callable[[List[np.ndarray]], float],
+        weights: List[tf.Tensor],
+        reward_function: Callable[[List[tf.Tensor]], float],
         population_size: int,
         sigma: float,
         learning_rate: float
@@ -48,43 +49,43 @@ class Deep_Evolution_Strategy:
         self.sigma = sigma
         self.learning_rate = learning_rate
 
-    def _get_weight_from_population(self, weights: List[np.ndarray], population: List[List[np.ndarray]]) -> List[np.ndarray]:
+    def _get_weight_from_population(self, weights: List[tf.Tensor], population: List[tf.Tensor]) -> List[tf.Tensor]:
         """
         Returns the weights after applying mutation.
 
         Args:
-            weights (List[np.ndarray]): The current weights.
-            population (List[List[np.ndarray]]): The population of mutated weights.
+            weights (List[tf.Tensor]): The current weights.
+            population (List[List[tf.Tensor]]): The population of mutated weights.
 
         Returns:
-            List[np.ndarray]: The weights after applying mutation.
+            List[tf.Tensor]: The weights after applying mutation.
         """
         weights_population = []
         for index, i in enumerate(population):
-            jittered = self.sigma * i
+            jittered = tf.multiply(self.sigma, i)
             weights_population.append(weights[index] + jittered)
             
         return weights_population
 
-    def get_weights(self) -> List[np.ndarray]:
+    def get_weights(self) -> List[tf.Tensor]:
         """
         Returns the current weights.
 
         Returns:
-            List[np.ndarray]: The current weights.
+            List[tf.Tensor]: The current weights.
         """
         return self.weights
     
-    def _generate_individual(self) -> List[List[np.ndarray]]:
+    def _generate_individual(self) -> List[tf.Tensor]:
         """
         Generates an individual for the deep evolution strategy.
 
         Returns:
-            List[List[np.ndarray]]: The generated individual.
+            List[tf.Tensor]: The generated individual.
         """
         x = []
         for w in self.weights:
-            x.append(np.random.randn(*w.shape))
+            x.append(tf.random.normal(shape=w.shape))
         return x
     
     def train(self, epoch: int = 100, print_every: int = 1) -> None:
@@ -100,25 +101,30 @@ class Deep_Evolution_Strategy:
         """
         lasttime = time.time()
         for i in range(epoch):
-            rewards = np.zeros(self.population_size)
+            rewards = tf.zeros(self.population_size)
             population = []
-                
+
             for k in range(self.population_size):
                 population.append(self._generate_individual())
                 weights_population = self._get_weight_from_population(self.weights, population[k])
-                rewards[k] = self.reward_function(weights_population)
+                rewards = tf.tensor_scatter_nd_add(rewards, [[k]], [self.reward_function(weights_population)])
 
-            rewards = (rewards - np.mean(rewards)) / np.std(rewards)
+
+            updated_weights = []
+            rewards = (rewards - tf.reduce_mean(rewards)) / tf.math.reduce_std(rewards)
             for index, w in enumerate(self.weights):
                 A = np.array([p[index] for p in population])
-                self.weights[index] = (
-                    w
-                    + self.learning_rate
+                weight_update = (
+                    w 
+                    + self.learning_rate 
                     / (self.population_size * self.sigma)
-                    * np.dot(A.T, rewards).T
+                    *  np.dot(A.T, rewards).T
                 )
+                updated_weights.append(weight_update)
                 
+            self.weights = updated_weights
+
             if (i + 1) % print_every == 0:
-                print('iter %d. reward: %f'% (i + 1, self.reward_function(self.weights)))
-                
+                print('iter %d. reward: %f' % (i + 1, self.reward_function(self.weights)))
+
         print('time taken to train:', time.time() - lasttime, 'seconds')
