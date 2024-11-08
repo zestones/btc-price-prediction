@@ -6,6 +6,8 @@ This is splited into 2 parts, the first one is the prediction of the price of th
 
 In the second part of the project, we are trying to analyse the network of the bitcoin using the graph theory. We are trying to find communities in the network to analyse the evolution of the network over time.
 
+Check the [report](report/Big_Data_Report.pdf) for the full analysis and experimentation.
+
 ## Getting Started
 
 In order to run the project, you need to install the requirements.txt file. You can do it by running the following command : 
